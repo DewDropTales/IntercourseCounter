@@ -10,29 +10,33 @@ document.addEventListener('DOMContentLoaded', function () {
       tempElement.innerHTML = html;
 
       // Find the element containing the world population
-      const populationElement = tempElement.querySelector('.col-md-8.country-pop-description');
+      const populationElement = tempElement.querySelector('.maincounter-number');
 
-      // Extract the world population text
-      const populationText = populationElement.textContent.trim();
+      if (populationElement) {
+        // Extract the world population text
+        const populationText = populationElement.textContent.trim();
 
-      // Extract the numeric part from the text (assuming it's formatted like "Current World Population: 7,925,208,690")
-      const currentPopulation = parseInt(populationText.replace(/[^0-9]/g, ''), 10);
+        // Extract the numeric part from the text
+        const currentPopulation = parseInt(populationText.replace(/[^0-9]/g, ''), 10);
 
-      // Calculate and display the estimated people per second
-      const weeklyIntercourse = (1 / 3) * currentPopulation;
-      const perSecond = weeklyIntercourse / (7 * 24 * 60 * 60);
+        // Calculate and display the estimated people per second
+        const weeklyIntercourse = (1 / 3) * currentPopulation;
+        const perSecond = weeklyIntercourse / (7 * 24 * 60 * 60);
 
-      // Display the result on the webpage
-      const intercourseResultElement = document.getElementById('output');
-      intercourseResultElement.textContent = perSecond.toFixed(2);
+        // Display the result on the webpage
+        const intercourseResultElement = document.getElementById('output');
+        intercourseResultElement.textContent = perSecond.toFixed(2);
 
-      // Calculate and display the estimated pregnancies per second
-      const pregnancyRate = 0.1; // Adjust this rate as needed
-      const pregnanciesPerSecond = perSecond * pregnancyRate;
+        // Calculate and display the estimated pregnancies per second
+        const pregnancyRate = 0.1; // Adjust this rate as needed
+        const pregnanciesPerSecond = perSecond * pregnancyRate;
 
-      // Display the pregnancy result on the webpage
-      const pregnancyResultElement = document.getElementById('pregnancyOutput');
-      pregnancyResultElement.textContent = pregnanciesPerSecond.toFixed(2);
+        // Display the pregnancy result on the webpage
+        const pregnancyResultElement = document.getElementById('pregnancyOutput');
+        pregnancyResultElement.textContent = pregnanciesPerSecond.toFixed(2);
+      } else {
+        console.error('Population element not found on the Worldometer page.');
+      }
     })
     .catch(error => {
       // Log and handle errors
