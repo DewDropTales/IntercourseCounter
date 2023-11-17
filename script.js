@@ -1,46 +1,31 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const worldometersEndpoint = 'https://www.worldometers.info/world-population/';
+  const worldBankApiEndpoint = 'https://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?format=json';
 
-  // Fetch the HTML content of the Worldometer page
-  fetch(worldometersEndpoint)
-    .then(response => response.text())
-    .then(html => {
-      // Create a temporary DOM element to parse the HTML
-      const tempElement = document.createElement('div');
-      tempElement.innerHTML = html;
+  // Fetch population data from the World Bank API
+  fetch(worldBankApiEndpoint)
+    .then(response => response.json())
+    .then(data => {
+      const latestData = data[1][0];
+      const currentPopulation = latestData.value;
 
-      // Find the element containing the world population
-      const populationElement = tempElement.querySelector('.maincounter-number');
+      // Calculate the estimated people per second
+      const weeklyIntercourse = (1 / 3) * currentPopulation;
+      const perSecond = weeklyIntercourse / (7 * 24 * 60 * 60);
 
-      if (populationElement) {
-        // Extract the world population text
-        const populationText = populationElement.textContent.trim();
+      // Display the result on the webpage
+      const intercourseResultElement = document.getElementById('output');
+      intercourseResultElement.textContent = perSecond.toFixed(2);
 
-        // Extract the numeric part from the text
-        const currentPopulation = parseInt(populationText.replace(/[^0-9]/g, ''), 10);
+      // Calculate the estimated pregnancies per second
+      const pregnancyRate = 0.1; // Adjust this rate as needed
+      const pregnanciesPerSecond = perSecond * pregnancyRate;
 
-        // Calculate and display the estimated people per second
-        const weeklyIntercourse = (1 / 3) * currentPopulation;
-        const perSecond = weeklyIntercourse / (7 * 24 * 60 * 60);
-
-        // Display the result on the webpage
-        const intercourseResultElement = document.getElementById('output');
-        intercourseResultElement.textContent = perSecond.toFixed(2);
-
-        // Calculate and display the estimated pregnancies per second
-        const pregnancyRate = 0.1; // Adjust this rate as needed
-        const pregnanciesPerSecond = perSecond * pregnancyRate;
-
-        // Display the pregnancy result on the webpage
-        const pregnancyResultElement = document.getElementById('pregnancyOutput');
-        pregnancyResultElement.textContent = pregnanciesPerSecond.toFixed(2);
-      } else {
-        console.error('Population element not found on the Worldometer page.');
-      }
+      // Display the pregnancy result on the webpage
+      const pregnancyResultElement = document.getElementById('pregnancyOutput');
+      pregnancyResultElement.textContent = pregnanciesPerSecond.toFixed(2);
     })
     .catch(error => {
-      // Log and handle errors
-      console.error('Error fetching data from Worldometer:', error);
+      console.error('Error fetching data from the World Bank API:', error);
       // Handle errors, e.g., display a message to the user
     });
 });
