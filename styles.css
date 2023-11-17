@@ -35,11 +35,6 @@ button {
   display: none;
 }
 
-#intercourseTab,
-#pregnancyTab {
-  display: none;
-}
-
 p {
   font-size: 18px;
   margin-top: 20px;
