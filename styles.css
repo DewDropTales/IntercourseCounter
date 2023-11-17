@@ -11,10 +11,33 @@ body {
 
 .container {
   text-align: center;
+  margin-top: 50px;
 }
 
 h1 {
   color: #333;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.tab {
+  display: none;
+}
+
+#intercourseTab,
+#pregnancyTab {
+  display: none;
 }
 
 p {
@@ -22,7 +45,8 @@ p {
   margin-top: 20px;
 }
 
-#output {
+#output,
+#pregnancyOutput {
   font-weight: bold;
   color: #e44d26;
 }
