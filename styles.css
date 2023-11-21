@@ -19,7 +19,7 @@ h1 {
 }
 
 button {
-  background-color: #4caf61;
+  background-color: #4c84af;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -30,6 +30,12 @@ button {
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 12px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease-in-out; /* This will add a smooth transition effect */
+}
+
+  button:hover {
+  transform: scale(1.10); /* This will increase the size of the button by 5% when hovered */
 }
 
 .tab {
