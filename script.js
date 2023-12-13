@@ -31,7 +31,7 @@ function displayResults(intercourseResultElementId, intercourseResult, pregnancy
 window.onload = function() {
   // Fetch the current population from the iframe
   // Extract the population from the div
-  const currentPopulation = 8075817600;
+  const currentPopulation = 8078690000;
 
   // Calculate the estimated people per second
   const peoplePerSecond = calculatePeoplePerSecond(currentPopulation);
