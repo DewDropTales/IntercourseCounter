@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-content=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Intercourse Estimator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intercourse Counter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Intercourse Estimator</h1>
-    <button onclick="openTab('intercourseTab')">Intercourse</button>
-    <button onclick="openTab('pregnancyTab')">Pregnancy</button>
-
-    <div id="intercourseTab" class="tab">
-      <p id="result">Estimated people per second: <span id="output">-</span></p>
+    <div class="container">
+        <h1>Intercourse Counter</h1>
+        <div id="counter">
+            <p>The estimated number of people experiencing intercourse per second:</p>
+            <div id="live-counter">Loading...</div>
+        </div>
     </div>
-
-    <div id="pregnancyTab" class="tab">
-      <p id="pregnancyResult">Estimated pregnancies per second: <span id="pregnancyOutput">-</span></p>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
