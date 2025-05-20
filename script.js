@@ -1,45 +1,33 @@
-// Function to open a tab
-function openTab(tabId) {
-  const tabs = document.getElementsByClassName('tab');
-  for (const tab of tabs) {
-    tab.style.display = 'none';
-  }
-  document.getElementById(tabId).style.display = 'block';
+// Fetch current world population and calculate estimated intercourse per second
+async function updateCounter() {
+    try {
+        // Fetch world population data from a reliable API
+        const response = await fetch('get-population.p.rapidapi.com/population', {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': 'b604471a9emshdb762ec2610aedcp14b2a4jsnc57f98c05da3',
+                'X-RapidAPI-Host': get-population.p.rapidapi.com'
+            }
+        });
+        const data = await response.json();
+        const population = data.body.population;
+
+        // Assume average intercourse acts per person per year (for sexually active adults)
+        const avgActsPerPersonPerYear = 75; // Adjustable between 50-100
+        const activePopulation = population * 0.35; // 35% of the population is sexually active
+        const totalActsPerYear = avgActsPerPersonPerYear * activePopulation;
+
+        // Convert total yearly acts to per second
+        const actsPerSecond = totalActsPerYear / (365.25 * 24 * 60 * 60);
+
+        // Update the live counter on the page
+        setInterval(() => {
+            document.getElementById('live-counter').textContent = (actsPerSecond).toFixed(2);
+        }, 1000); // Update every second
+    } catch (error) {
+        console.error('Error fetching population data:', error);
+    }
 }
 
-// Function to calculate the estimated people per second
-function calculatePeoplePerSecond(currentPopulation) {
-  const weeklyIntercourse = (1 / 3) * currentPopulation;
-  return weeklyIntercourse / (7 * 24 * 60 * 60);
-}
-
-// Function to calculate the estimated pregnancies per second
-function calculatePregnanciesPerSecond(peoplePerSecond, pregnancyRate) {
-  return peoplePerSecond * pregnancyRate;
-}
-
-// Function to display the results on the webpage
-function displayResults(intercourseResultElementId, intercourseResult, pregnancyResultElementId, pregnancyResult) {
-  const intercourseResultElement = document.getElementById(intercourseResultElementId);
-  intercourseResultElement.textContent = intercourseResult.toFixed(2);
-
-  const pregnancyResultElement = document.getElementById(pregnancyResultElementId);
-  pregnancyResultElement.textContent = pregnancyResult.toFixed(2);
-}
-
-// Main function
-window.onload = function() {
-  // Fetch the current population from the iframe
-  // Extract the population from the div
-  const currentPopulation = 8086676819;
-
-  // Calculate the estimated people per second
-  const peoplePerSecond = calculatePeoplePerSecond(currentPopulation);
-
-  // Calculate the estimated pregnancies per second
-  const pregnancyRate = 0.1; // Adjust this rate as needed
-  const pregnanciesPerSecond = calculatePregnanciesPerSecond(peoplePerSecond, pregnancyRate);
-
-  // Display the results on the webpage
-  displayResults('output', peoplePerSecond, 'pregnancyOutput', pregnanciesPerSecond);
-}
+// Initialize the update
+updateCounter();
