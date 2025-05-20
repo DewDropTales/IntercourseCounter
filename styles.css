@@ -1,59 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    background-color: #111;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 .container {
-  text-align: center;
-  margin-top: 50px;
+    text-align: center;
+    padding: 20px;
 }
 
 h1 {
-  color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
 }
 
-button {
-  background-color: #4c84af;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 12px;
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s ease-in-out; /* This will add a smooth transition effect */
+#counter {
+    font-size: 1.2rem;
+    line-height: 1.6;
 }
 
-  button:hover {
-  transform: scale(1.10); /* This will increase the size of the button by 5% when hovered */
-}
-
-.tab {
-  display: none;
-}
-
-#intercourseTab,
-#pregnancyTab {
-  display: none;
-}
-
-p {
-  font-size: 18px;
-  margin-top: 20px;
-}
-
-#output,
-#pregnancyOutput {
-  font-weight: bold;
-  color: #e44d26;
+#live-counter {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-top: 20px;
+    color: #e74c3c;
 }
