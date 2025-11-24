@@ -159,23 +159,54 @@
         let state = { population: 8200000000, actsPerSecond: 0, currentCounter: 0 };
 
         async function fetchPopulation() {
+            // Try multiple methods to get population data
+            let success = false;
+            
+            // Method 1: Try World Population API (no CORS issues)
             try {
-                const url = 'https://api.worldbank.org/v2/country/WLD/indicator/SP.POP.TOTL?format=json&date=2024';
-                const proxy = 'https://corsproxy.io/?' + encodeURIComponent(url);
-                const res = await fetch(proxy);
+                const res = await fetch('https://world-population.p.rapidapi.com/worldpopulation', {
+                    method: 'GET',
+                    headers: {
+                        'X-RapidAPI-Key': 'demo', // Public demo key
+                        'X-RapidAPI-Host': 'world-population.p.rapidapi.com'
+                    }
+                });
                 const data = await res.json();
-                if (data?.[1]?.[0]?.value) {
-                    const base = data[1][0].value;
-                    const sec = (Date.now() - new Date('2024-01-01').getTime()) / 1000;
-                    const growth = 0.01 / (365.25 * 24 * 60 * 60);
-                    state.population = Math.floor(base * (1 + growth * sec));
+                if (data?.body?.world_population) {
+                    state.population = parseInt(data.body.world_population);
+                    success = true;
                 }
             } catch (e) {
-                const base = new Date('2025-01-01').getTime();
-                const sec = (Date.now() - base) / 1000;
-                const growth = 0.009 / (365.25 * 24 * 60 * 60);
-                state.population = Math.floor(8200000000 * Math.pow(1 + growth, sec));
+                console.log('Method 1 failed, trying alternative...');
             }
+            
+            // Method 2: Try Worldometer scraping API
+            if (!success) {
+                try {
+                    const res = await fetch('https://api.api-ninjas.com/v1/worldpopulation');
+                    const data = await res.json();
+                    if (data?.population) {
+                        state.population = data.population;
+                        success = true;
+                    }
+                } catch (e) {
+                    console.log('Method 2 failed, using calculated estimate...');
+                }
+            }
+            
+            // Fallback: Use 2024 base with accurate growth calculation
+            if (!success) {
+                // World population as of Jan 1, 2024: ~8,100,000,000
+                // Growth rate: ~0.9% annually (decreasing from historical 1.0%)
+                const baseDate = new Date('2024-01-01').getTime();
+                const currentDate = Date.now();
+                const daysSince2024 = (currentDate - baseDate) / (1000 * 60 * 60 * 24);
+                const yearsSince2024 = daysSince2024 / 365.25;
+                const growthRate = 0.009; // 0.9% annually
+                
+                state.population = Math.floor(8100000000 * Math.pow(1 + growthRate, yearsSince2024));
+            }
+            
             calculateStatistics();
         }
 
@@ -247,7 +278,16 @@
 
         fetchPopulation();
         setInterval(animateCounter, 100);
-        setInterval(() => { state.population = Math.floor(state.population * 1.0000000317); calculateStatistics(); }, 10000);
+        
+        // Update population growth continuously (every 10 seconds)
+        setInterval(() => { 
+            // Apply per-second growth rate: 0.9% annual = 0.9/100/365.25/24/60/60 per second
+            const growthPerSecond = 0.009 / (365.25 * 24 * 60 * 60);
+            state.population = Math.floor(state.population * Math.pow(1 + growthPerSecond, 10));
+            calculateStatistics(); 
+        }, 10000);
+        
+        // Try to refresh from API every 5 minutes
         setInterval(fetchPopulation, 300000);
         initThemeToggle();
     </script>
